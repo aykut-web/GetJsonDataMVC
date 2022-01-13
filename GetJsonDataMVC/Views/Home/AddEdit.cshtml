@@ -1,0 +1,60 @@
+﻿@model GetJsonDataMVC.ViewModels.AddEditViewModel
+
+@{
+    ViewBag.Title = "Kullanıcı " + (Model.Adding ? "Ekle" : "Düzenle");
+}
+
+
+<div class="UserListContainer">
+    <div class="UserListMain">
+
+        <div class="UserListTitle">
+            <h1>Kullanıcı @(Model.Adding ? "Ekle" : "Düzenle") @(!String.IsNullOrEmpty(Model.HostingDomainName) ? ( "(" + Model.HostingDomainName + ")" ) : "")</h1>
+        </div>
+        <div class="UserListContent form">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "UserForm" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.Adding)
+
+                <div class="UserList">
+                    @if (Model.Adding)
+                    {
+                        <label for="">HostingDomainName <span>*</span></label>
+                        @Html.TextBoxFor(x => x.HostingDomainName)
+                    }
+                    else
+                    {
+                        <label for="">HostingDomainName</label>
+                        @Html.TextBoxFor(x => x.HostingDomainName, new { @readonly = "" })
+                    }
+                </div>
+                <div class="UserList">
+                    <label for="">HostingPackage <span>*</span></label>
+                    @Html.TextBoxFor(x => x.HostingPackage)
+                </div>
+                if (!Model.Adding)
+                {
+                    <div class="UserList">
+                        <label for="">RamUsage</label>
+                        @Html.TextBoxFor(x => x.RamUsage, new { @readonly = "" })
+                    </div>
+                    <div class="UserList">
+                        <label for="">RamMax</label>
+                        @Html.TextBoxFor(x => x.RamMax, new { @readonly = "" })
+                    </div>
+                    <div class="UserList">
+                        <label for="">CpuLoad</label>
+                        @Html.TextBoxFor(x => x.CpuLoad, new { @readonly = "" })
+                    </div>
+                    <div class="UserList">
+                        <label for="">IncomingConnections</label>
+                        @Html.TextBoxFor(x => x.IncomingConnections, new { @readonly = "" })
+                    </div>
+                }
+                <button type="submit">KAYDET</button>
+            }
+        </div>
+
+    </div>
+</div>

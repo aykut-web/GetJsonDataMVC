@@ -1,0 +1,36 @@
+﻿@model GetJsonDataMVC.ViewModels.IndexViewModel
+
+@{
+    ViewBag.Title = "Kullanıcı Listesi";
+}
+
+<div class="UserListContainer">
+    <div class="UserListMain">
+
+
+        <div class="UserListNewUser">
+            <a href="@Url.Action("AddEdit", "Home")" class="btn">Yeni Kullanıcı Ekle</a>
+        </div>
+        <div class="UserListTitle">
+            <h1>Kullanıcı Listesi</h1>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.TextBoxFor(x => x.Arama, new { placeholder = "Arama..." })
+            }
+        </div>
+        <div class="UserListContent">
+            @for (int i = 0; i < Model.UserList.Count; i++)
+            {
+                <div class="UserList">
+                    <p>@Model.UserList[i].HostingDomainName</p>
+                    <a href="@Url.Action("AddEdit", "Home", new { UserName = Model.UserList[i].HostingDomainName.Replace(".", "|")})" class="btn btn-success">Düzenle</a>
+                    <a href="@Url.Action("Delete", "Home", new { UserName = Model.UserList[i].HostingDomainName.Replace(".", "|") })" class="btn btn-danger">Sil</a>
+                </div>
+            }
+        </div>
+
+
+    </div>
+</div>
+
